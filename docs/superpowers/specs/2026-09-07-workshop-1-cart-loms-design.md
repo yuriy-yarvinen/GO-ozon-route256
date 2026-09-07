@@ -8,11 +8,11 @@ Scope: homework base + diamond (in-memory storage with real business logic)
 - Implement `cart` and `loms` skeletons per `workshop-1/docs/README.md`.
 - Layered structure; business logic decoupled from HTTP handlers and HTTP clients.
 - Inter-service calls actually executed over HTTP+JSON.
-- ProductService integration for `cart/item/add` and `cart/list`; auth token taken from request and stored in context.
+- ProductService integration for `cart/item/add` and `cart/list` via a **simple stub client** (no live `http://route256.pavl.uk` calls); auth token taken from request and stored in context (stub may ignore token but wiring must pass it).
 - In-memory repositories for cart and loms (diamond).
 - `make precommit` and `make run-all` succeed from `workshop-1/`.
 
-Out of scope for this homework: notifications/Kafka, gRPC ProductService client.
+Out of scope for this homework: notifications/Kafka, gRPC ProductService client, live `route256.pavl.uk` ProductService (use an in-process stub client instead).
 
 ## Architecture
 
@@ -144,12 +144,16 @@ Background goroutine periodically finds orders in `awaiting payment` older than 
 
 Env-driven:
 
-- Cart: `LOMS_URL` (default `http://loms:8080` in compose), `PRODUCT_SERVICE_URL` (default `http://route256.pavl.uk:8080`)
+- Cart: `LOMS_URL` (default `http://loms:8080` in compose)
 - Both services: listen `:8080`
 
-ProductService: HTTP JSON to external service. Cart middleware reads `Authorization`, stores raw token in context; product client copies it into request JSON field `token`.
+ProductService: **stub client** implementing the same interface as a real HTTP client (`GetProduct(ctx, sku) → name, price`). Behavior:
+- reads token from context (must be wired; stub does not call network);
+- returns fixed name/price for known seeded SKUs;
+- returns not-found error for unknown SKUs.
+Cart middleware still reads `Authorization`, stores raw token in context so the call path matches the homework.
 
-LOMS client: thin `POST` wrappers for create/info/pay/cancel/stock info.
+LOMS client: thin `POST` wrappers for create/info/pay/cancel/stock info (real HTTP to loms service).
 
 ## Wiring
 
