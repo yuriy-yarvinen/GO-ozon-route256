@@ -197,6 +197,23 @@ func TestListCartReturnsProductDetailsAndTotal(t *testing.T) {
 }
 
 func TestCheckoutClearsOnlyAfterCreateOrderSuccess(t *testing.T) {
+	t.Run("empty cart", func(t *testing.T) {
+		repo := newRepositoryFake()
+		loms := &lomsFake{}
+		service := cartsvc.New(repo, &productFake{}, loms)
+
+		_, err := service.Checkout(context.Background(), 42)
+		if !errors.Is(err, model.ErrValidation) {
+			t.Fatalf("err=%v, want validation error", err)
+		}
+		if loms.createCalls != 0 {
+			t.Fatalf("CreateOrder calls=%d, want 0", loms.createCalls)
+		}
+		if repo.cleared {
+			t.Fatal("empty cart cleared")
+		}
+	})
+
 	t.Run("success", func(t *testing.T) {
 		repo := newRepositoryFake()
 		repo.items[42] = map[uint32]uint16{1001: 2}

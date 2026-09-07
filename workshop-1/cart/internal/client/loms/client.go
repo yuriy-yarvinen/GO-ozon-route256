@@ -121,6 +121,8 @@ func mapResponseError(statusCode int) error {
 	}
 
 	switch statusCode {
+	case http.StatusBadRequest:
+		return model.ErrValidation
 	case http.StatusPreconditionFailed:
 		return model.ErrInsufficient
 	case http.StatusNotFound:

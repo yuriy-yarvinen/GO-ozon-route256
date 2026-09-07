@@ -45,6 +45,15 @@ func newHandler(products cartsvc.ProductClient, loms cartsvc.LOMSClient) http.Ha
 	return New(cartsvc.New(cartrepo.New(), products, loms))
 }
 
+func newHandlerWithItem(t *testing.T, products cartsvc.ProductClient, loms cartsvc.LOMSClient) http.Handler {
+	t.Helper()
+	repository := cartrepo.New()
+	if err := repository.Add(context.Background(), 1, 1001, 1); err != nil {
+		t.Fatal(err)
+	}
+	return New(cartsvc.New(repository, products, loms))
+}
+
 func request(t *testing.T, handler http.Handler, path, body, authorization string) *httptest.ResponseRecorder {
 	t.Helper()
 	req := httptest.NewRequest(http.MethodPost, path, bytes.NewBufferString(body))
@@ -73,7 +82,6 @@ func TestAddItemPassesStrippedBearerTokenAndDeadline(t *testing.T) {
 }
 
 func TestHandlerRoutes(t *testing.T) {
-	handler := newHandler(&productClient{}, &lomsClient{stock: 5, orderID: 42})
 	tests := []struct {
 		path string
 		body string
@@ -86,6 +94,10 @@ func TestHandlerRoutes(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.path, func(t *testing.T) {
+			handler := newHandler(&productClient{}, &lomsClient{stock: 5, orderID: 42})
+			if test.path == "/cart/item/delete" || test.path == "/cart/checkout" {
+				handler = newHandlerWithItem(t, &productClient{}, &lomsClient{stock: 5, orderID: 42})
+			}
 			response := request(t, handler, test.path, test.body, "")
 			if response.Code != http.StatusOK {
 				t.Fatalf("status = %d, want %d; body = %s", response.Code, http.StatusOK, response.Body.String())
@@ -95,7 +107,7 @@ func TestHandlerRoutes(t *testing.T) {
 }
 
 func TestCheckoutResponse(t *testing.T) {
-	response := request(t, newHandler(&productClient{}, &lomsClient{orderID: 42}),
+	response := request(t, newHandlerWithItem(t, &productClient{}, &lomsClient{orderID: 42}),
 		"/cart/checkout", `{"user":1}`, "")
 	var body struct {
 		OrderID int64 `json:"orderID"`

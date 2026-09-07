@@ -97,6 +97,7 @@ func TestClientMapsStatuses(t *testing.T) {
 		statusCode int
 		wantErr    error
 	}{
+		{name: "validation", statusCode: http.StatusBadRequest, wantErr: model.ErrValidation},
 		{name: "insufficient", statusCode: http.StatusPreconditionFailed, wantErr: model.ErrInsufficient},
 		{name: "not found", statusCode: http.StatusNotFound, wantErr: model.ErrNotFound},
 	}

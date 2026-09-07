@@ -118,6 +118,9 @@ func (s *Service) Checkout(ctx context.Context, userID int64) (int64, error) {
 	}
 
 	items := s.repository.List(ctx, userID)
+	if len(items) == 0 {
+		return 0, model.ErrValidation
+	}
 	orderID, err := s.loms.CreateOrder(ctx, userID, items)
 	if err != nil {
 		return 0, err
