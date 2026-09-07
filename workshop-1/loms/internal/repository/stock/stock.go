@@ -1,6 +1,7 @@
 package stock
 
 import (
+	"context"
 	"sync"
 
 	"route256/loms/internal/model"
@@ -24,7 +25,7 @@ func New(seed map[uint32]uint64) *Repository {
 	return &Repository{data: data}
 }
 
-func (r *Repository) GetAvailable(sku uint32) uint64 {
+func (r *Repository) GetAvailable(_ context.Context, sku uint32) uint64 {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	e, ok := r.data[sku]
@@ -34,7 +35,7 @@ func (r *Repository) GetAvailable(sku uint32) uint64 {
 	return e.total - e.reserved
 }
 
-func (r *Repository) Reserve(sku uint32, count uint16) error {
+func (r *Repository) Reserve(_ context.Context, sku uint32, count uint16) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	e, ok := r.data[sku]
@@ -45,7 +46,7 @@ func (r *Repository) Reserve(sku uint32, count uint16) error {
 	return nil
 }
 
-func (r *Repository) Release(sku uint32, count uint16) error {
+func (r *Repository) Release(_ context.Context, sku uint32, count uint16) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	e, ok := r.data[sku]
@@ -56,7 +57,7 @@ func (r *Repository) Release(sku uint32, count uint16) error {
 	return nil
 }
 
-func (r *Repository) RemoveReserved(sku uint32, count uint16) error {
+func (r *Repository) RemoveReserved(_ context.Context, sku uint32, count uint16) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	e, ok := r.data[sku]
