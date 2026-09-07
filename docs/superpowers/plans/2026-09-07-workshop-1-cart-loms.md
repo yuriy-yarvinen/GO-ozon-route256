@@ -21,6 +21,8 @@
 - Errors: 400 validation, 404 not found, 412 failed precondition / insufficient stocks.
 - Seed stocks for SKUs `1001`, `1002`, `1003` with totals `100`, `50`, `10` (same SKUs known to product stub).
 - Notifications service stays empty stub; do not expand Kafka scope.
+- **Context:** pass `context.Context` on every handler → service → repo/client call; do not replace request context with `context.Background()` on the hot path.
+- **Timeouts:** outbound HTTP and request-scoped work use deadlines **≤ 500ms** (`context.WithTimeout(..., 500*time.Millisecond)` and/or `http.Client{Timeout: 500 * time.Millisecond}`).
 
 ---
 
@@ -342,7 +344,7 @@ git commit -m "feat(loms): add order repo and core service logic"
 
 - [ ] **Step 1: Implement handlers**
 
-Decode JSON POST bodies; map errors → status codes (`ErrValidation`→400, `ErrNotFound`→404, `ErrInsufficient`/`ErrInvalidStatus`→412).
+Use `r.Context()` (optionally `WithTimeout(..., 500*time.Millisecond)`). Pass ctx into service methods. Decode JSON POST bodies; map errors → status codes (`ErrValidation`→400, `ErrNotFound`→404, `ErrInsufficient`/`ErrInvalidStatus`→412).
 
 Routes:
 - `POST /order/create` → `{user, items}` → `{orderID}`
@@ -451,7 +453,7 @@ func (s *Stub) GetProduct(ctx context.Context, sku uint32) (string, uint32, erro
 
 - [ ] **Step 2: LOMS HTTP client**
 
-`New(baseURL string, httpClient *http.Client)`; POST JSON to `/stock/info` and `/order/create`; map non-2xx: 412→`ErrInsufficient`, 404→`ErrNotFound`, else wrap error.
+`New(baseURL string, httpClient *http.Client)`; default client `Timeout: 500 * time.Millisecond` if nil. Each method: `ctx, cancel := context.WithTimeout(ctx, 500*time.Millisecond); defer cancel()` then `http.NewRequestWithContext`. POST JSON to `/stock/info` and `/order/create`; map non-2xx: 412→`ErrInsufficient`, 404→`ErrNotFound`, else wrap error.
 
 - [ ] **Step 3: Stub unit test + commit**
 
