@@ -7,14 +7,13 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"syscall"
-	"time"
-
 	lomshandler "route256/loms/internal/handler"
 	orderrepo "route256/loms/internal/repository/order"
 	stockrepo "route256/loms/internal/repository/stock"
 	lomssvc "route256/loms/internal/service/loms"
 	"route256/loms/internal/worker"
+	"syscall"
+	"time"
 )
 
 func main() {

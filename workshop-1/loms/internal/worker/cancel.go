@@ -2,9 +2,8 @@ package worker
 
 import (
 	"context"
-	"time"
-
 	"route256/loms/internal/model"
+	"time"
 )
 
 const (

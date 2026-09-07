@@ -7,10 +7,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"route256/cart/internal/model"
 	"strings"
 	"time"
-
-	"route256/cart/internal/model"
 )
 
 const requestTimeout = 500 * time.Millisecond

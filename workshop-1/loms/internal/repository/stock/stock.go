@@ -2,9 +2,8 @@ package stock
 
 import (
 	"context"
-	"sync"
-
 	"route256/loms/internal/model"
+	"sync"
 )
 
 type entry struct {

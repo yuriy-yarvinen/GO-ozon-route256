@@ -2,9 +2,8 @@ package cart
 
 import (
 	"context"
-	"sync"
-
 	"route256/cart/internal/model"
+	"sync"
 )
 
 type Repository struct {

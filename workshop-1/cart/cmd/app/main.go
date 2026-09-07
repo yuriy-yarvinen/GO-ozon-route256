@@ -7,15 +7,14 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"syscall"
-	"time"
-
 	lomsclient "route256/cart/internal/client/loms"
 	"route256/cart/internal/client/product"
 	"route256/cart/internal/config"
 	carthandler "route256/cart/internal/handler"
 	cartrepo "route256/cart/internal/repository/cart"
 	cartsvc "route256/cart/internal/service/cart"
+	"syscall"
+	"time"
 )
 
 func main() {

@@ -2,10 +2,9 @@ package order_test
 
 import (
 	"context"
-	"testing"
-
 	"route256/loms/internal/model"
 	orderrepo "route256/loms/internal/repository/order"
+	"testing"
 )
 
 func TestCompareAndSwapStatusRejectsSecondTransition(t *testing.T) {

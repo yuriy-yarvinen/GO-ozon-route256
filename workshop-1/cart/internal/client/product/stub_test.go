@@ -3,10 +3,9 @@ package product
 import (
 	"context"
 	"errors"
-	"testing"
-
 	"route256/cart/internal/model"
 	"route256/cart/internal/pkg/ctxkey"
+	"testing"
 )
 
 func TestStubGetProduct(t *testing.T) {

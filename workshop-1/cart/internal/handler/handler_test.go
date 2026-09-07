@@ -7,13 +7,12 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
-	"testing"
-	"time"
-
 	"route256/cart/internal/model"
 	"route256/cart/internal/pkg/ctxkey"
 	cartrepo "route256/cart/internal/repository/cart"
 	cartsvc "route256/cart/internal/service/cart"
+	"testing"
+	"time"
 )
 
 type productClient struct {

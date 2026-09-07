@@ -2,9 +2,8 @@ package stock_test
 
 import (
 	"context"
-	"testing"
-
 	"route256/loms/internal/repository/stock"
+	"testing"
 )
 
 func TestReserveAndAvailable(t *testing.T) {

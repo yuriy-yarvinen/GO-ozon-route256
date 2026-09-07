@@ -2,10 +2,9 @@ package order
 
 import (
 	"context"
+	"route256/loms/internal/model"
 	"sync"
 	"time"
-
-	"route256/loms/internal/model"
 )
 
 type entry struct {

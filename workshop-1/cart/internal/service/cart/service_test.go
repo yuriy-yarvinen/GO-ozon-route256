@@ -3,10 +3,9 @@ package cart_test
 import (
 	"context"
 	"errors"
-	"testing"
-
 	"route256/cart/internal/model"
 	cartsvc "route256/cart/internal/service/cart"
+	"testing"
 )
 
 type repositoryFake struct {

@@ -3,13 +3,12 @@ package loms_test
 import (
 	"context"
 	"errors"
-	"testing"
-	"time"
-
 	"route256/loms/internal/model"
 	orderrepo "route256/loms/internal/repository/order"
 	stockrepo "route256/loms/internal/repository/stock"
 	lomssvc "route256/loms/internal/service/loms"
+	"testing"
+	"time"
 )
 
 func newSvc() *lomssvc.Service {

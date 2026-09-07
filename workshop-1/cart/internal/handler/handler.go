@@ -5,12 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strings"
-	"time"
-
 	"route256/cart/internal/model"
 	"route256/cart/internal/pkg/ctxkey"
 	cartsvc "route256/cart/internal/service/cart"
+	"strings"
+	"time"
 )
 
 const requestTimeout = 500 * time.Millisecond

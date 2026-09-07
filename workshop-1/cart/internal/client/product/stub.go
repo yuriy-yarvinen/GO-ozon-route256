@@ -2,7 +2,6 @@ package product
 
 import (
 	"context"
-
 	"route256/cart/internal/model"
 	"route256/cart/internal/pkg/ctxkey"
 )

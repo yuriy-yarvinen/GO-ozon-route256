@@ -2,9 +2,8 @@ package cart_test
 
 import (
 	"context"
-	"testing"
-
 	"route256/cart/internal/repository/cart"
+	"testing"
 )
 
 func TestCartRepository(t *testing.T) {

@@ -6,10 +6,9 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"route256/cart/internal/model"
 	"testing"
 	"time"
-
-	"route256/cart/internal/model"
 )
 
 func TestNewUsesDefaultHTTPTimeout(t *testing.T) {

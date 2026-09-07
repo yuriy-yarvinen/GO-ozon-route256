@@ -5,10 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"time"
-
 	"route256/loms/internal/model"
 	lomssvc "route256/loms/internal/service/loms"
+	"time"
 )
 
 const requestTimeout = 500 * time.Millisecond

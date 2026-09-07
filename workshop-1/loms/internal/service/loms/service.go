@@ -4,9 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
-
 	"route256/loms/internal/model"
+	"time"
 )
 
 type OrderRepository interface {

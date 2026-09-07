@@ -2,11 +2,10 @@ package worker
 
 import (
 	"context"
+	"route256/loms/internal/model"
 	"sync"
 	"testing"
 	"time"
-
-	"route256/loms/internal/model"
 )
 
 type orderListerStub struct {
