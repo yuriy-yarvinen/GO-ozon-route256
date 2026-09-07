@@ -155,6 +155,12 @@ Cart middleware still reads `Authorization`, stores raw token in context so the 
 
 LOMS client: thin `POST` wrappers for create/info/pay/cancel/stock info (real HTTP to loms service).
 
+### Context and timeouts
+
+- Propagate `context.Context` through handlers → services → repositories/clients (never drop or replace with `context.Background()` on the request path).
+- Outbound HTTP calls (cart → LOMS) use per-request timeout **≤ 500ms** via `context.WithTimeout(parent, 500*time.Millisecond)` (or an `http.Client.Timeout` of 500ms). Do not use longer timeouts.
+- Inbound handler: use `r.Context()`; optionally wrap with ≤500ms deadline for the whole handler if no parent deadline is set.
+
 ## Wiring
 
 `main.go` constructs: config → repositories → clients → services → handlers → `http.ListenAndServe(":8080", mux)`.
