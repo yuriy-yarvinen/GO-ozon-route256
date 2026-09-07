@@ -67,6 +67,25 @@ func (r *Repository) SetStatus(_ context.Context, orderID int64, status string) 
 	return nil
 }
 
+func (r *Repository) CompareAndSwapStatus(_ context.Context, orderID int64, from, to string) (model.Order, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	stored, ok := r.orders[orderID]
+	if !ok {
+		return model.Order{}, model.ErrNotFound
+	}
+	if stored.order.Status != from {
+		return model.Order{}, model.ErrInvalidStatus
+	}
+	stored.order.Status = to
+	r.orders[orderID] = stored
+
+	result := stored.order
+	result.Items = cloneItems(result.Items)
+	return result, nil
+}
+
 func (r *Repository) ListAwaitingOlderThan(_ context.Context, cutoff time.Time) []model.Order {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
