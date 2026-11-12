@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package examples.deprecated.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/deprecated;deprecated";
+
+message DeprecatedExample {
+  string old_name = 1 [deprecated = true];
+  string name = 2;
+}
+
+enum DeprecatedStatus {
+  option deprecated = true;
+
+  DEPRECATED_STATUS_UNSPECIFIED = 0;
+  DEPRECATED_STATUS_ACTIVE = 1 [deprecated = true];
+}
+
+service DeprecatedService {
+  option deprecated = true;
+
+  rpc OldMethod(DeprecatedExample) returns (DeprecatedExample) {
+    option deprecated = true;
+  }
+}

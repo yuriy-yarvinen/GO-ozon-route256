@@ -6,9 +6,33 @@
 ## Структура
 
 - `api/greeter/v1/greeter.proto` — protobuf-контракт.
+- `api/examples/` — отдельные примеры синтаксиса и встроенных типов Protocol Buffers.
 - `gen/greeter/v1/` — сгенерированные protobuf-типы и gRPC-клиент/сервер.
 - `cmd/server/` — gRPC-сервер на порту `50051`.
 - `cmd/client/` — клиент, принимающий имя аргументом командной строки.
+
+## Примеры protobuf
+
+В `api/examples/` собраны небольшие контракты по отдельным темам:
+
+- `deprecated.proto` — пометка устаревших полей, enum и методов.
+- `enum.proto` — перечисления.
+- `google_common_types.proto` — распространённые типы из `google/type`.
+- `google_well_known_types.proto` — встроенные типы `google/protobuf`, например `Timestamp`, `Duration` и `FieldMask`.
+- `maps.proto` — поля-карты.
+- `one_of.proto` — выбор одного значения из нескольких вариантов.
+- `optional.proto` — явное присутствие необязательных полей в proto3.
+- `scalar_value_types.proto` — скалярные типы protobuf.
+
+Файлы в `api/examples/` предназначены для изучения и не включены в `make generate`,
+который генерирует код для gRPC-сервиса `Greeter`. Для компиляции
+`google_well_known_types.proto` укажите `protoc` каталог с установленными
+protobuf include-файлами (`google/protobuf`). Для `google_common_types.proto`
+также нужны `.proto`-файлы Google APIs (`google/type`). Зависимость описана в
+`buf.yaml`. Для загрузки её в локальный кэш Buf выполните `buf dep update` из
+каталога `lecture-2-1`; это также создаст `buf.lock`, который использует Buf LSP.
+Корневой `buf.work.yaml` подключает этот модуль к Buf workspace, чтобы Buf LSP
+находил зависимость и при открытом в редакторе корне репозитория.
 
 ## Запуск
 

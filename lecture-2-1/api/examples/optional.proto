@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package examples.optional.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/optional;optionalexample";
+
+message OptionalExample {
+  optional string nickname = 1;
+  optional int32 age = 2;
+}

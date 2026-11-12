@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package examples.enum.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/enum;enumexample";
+
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_CREATED = 1;
+  ORDER_STATUS_PAID = 2;
+  ORDER_STATUS_CANCELLED = 3;
+}
+
+message EnumExample {
+  OrderStatus status = 1;
+}

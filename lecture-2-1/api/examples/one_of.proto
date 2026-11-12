@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package examples.oneof.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/oneof;oneofexample";
+
+message Contact {
+  oneof value {
+    string email = 1;
+    string phone = 2;
+  }
+}
+
+message OneOfExample {
+  Contact contact = 1;
+}

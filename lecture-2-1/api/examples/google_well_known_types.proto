@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package examples.wellknowntypes.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/wellknowntypes;wellknowntypes";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+message GoogleWellKnownTypesExample {
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Duration timeout = 2;
+  google.protobuf.Any payload = 3;
+  google.protobuf.FieldMask update_mask = 4;
+  google.protobuf.Struct metadata = 5;
+  google.protobuf.Value value = 6;
+  google.protobuf.StringValue optional_title = 7;
+}
+
+service HealthCheck {
+  rpc Check(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

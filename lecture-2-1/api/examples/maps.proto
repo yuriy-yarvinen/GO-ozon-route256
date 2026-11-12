@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package examples.maps.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/maps;mapsexample";
+
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+}
+
+message MapsExample {
+  map<string, string> labels = 1;
+  map<int32, Location> locations_by_id = 2;
+}
