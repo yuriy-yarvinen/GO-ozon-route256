@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package examples.v1;
+
+option go_package = "gitlab.ozon.dev/go/classroom-8/students/lecture-2-1/gen/examples/v1;examplesv1";
+
+import "api/examples/deprecated.proto";
+import "api/examples/enum.proto";
+import "api/examples/google_common_types.proto";
+import "api/examples/google_well_known_types.proto";
+import "api/examples/maps.proto";
+import "api/examples/one_of.proto";
+import "api/examples/optional.proto";
+import "api/examples/scalar_value_types.proto";
+
+service Examples {
+  rpc ScalarValueTypes(examples.scalarvaluetypes.v1.ScalarValueTypesExample) returns (examples.scalarvaluetypes.v1.ScalarValueTypesExample);
+  rpc Enum(examples.enum.v1.EnumExample) returns (examples.enum.v1.EnumExample);
+  rpc Maps(examples.maps.v1.MapsExample) returns (examples.maps.v1.MapsExample);
+  rpc OneOf(examples.oneof.v1.OneOfExample) returns (examples.oneof.v1.OneOfExample);
+  rpc Optional(examples.optional.v1.OptionalExample) returns (examples.optional.v1.OptionalExample);
+  rpc Deprecated(examples.deprecated.v1.DeprecatedExample) returns (examples.deprecated.v1.DeprecatedExample);
+  rpc GoogleWellKnownTypes(examples.wellknowntypes.v1.GoogleWellKnownTypesExample) returns (examples.wellknowntypes.v1.GoogleWellKnownTypesExample);
+  rpc GoogleCommonTypes(examples.googlecommontypes.v1.GoogleCommonTypesExample) returns (examples.googlecommontypes.v1.GoogleCommonTypesExample);
+}

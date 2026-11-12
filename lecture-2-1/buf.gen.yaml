@@ -1,0 +1,10 @@
+version: v1
+plugins:
+  - plugin: go
+    out: .
+    opt:
+      - module=gitlab.ozon.dev/go/classroom-8/students/lecture-2-1
+  - plugin: go-grpc
+    out: .
+    opt:
+      - module=gitlab.ozon.dev/go/classroom-8/students/lecture-2-1
